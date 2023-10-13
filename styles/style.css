@@ -20,3 +20,144 @@ li,
 figure {
   margin: 0;
 }
+
+:root {
+  --bg-color: #f3efec;
+  --text-color: #312a4e;
+  --accent-color: #ffab6b;
+  --main-font: Raleway;
+  --accent-font: "STIX Two Text";
+}
+
+.page {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.heading {
+  font-family: var(--accent-font);
+  text-align: center;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 90%; /* 108px */
+}
+
+.content-section {
+  padding-inline-start: 5vi;
+  padding-inline-end: 5vi;
+}
+
+.header__title {
+  font-size: clamp(3.75rem, 2.5rem + 5.5556vw, 7.5rem);
+  margin-block-end: 40px;
+}
+
+.content__title {
+  font-size: 30px;
+  margin-block-start: 7vi;
+  margin-block-end: 2.5vi;
+}
+
+.header {
+  padding-block-start: 10vi;
+}
+
+.content__text-block {
+  font-size: 18px;
+  font-family: var(--main-font);
+}
+
+.content__paragraph:not(:last-child) {
+  margin-block-end: 1.5em;
+}
+
+a {
+  color: var(--text-color);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  cursor: pointer;
+}
+
+a:hover {
+  border-color: color-mix(in srgb, currentColor 50%, transparent);
+}
+
+a:focus {
+  outline: 1px solid currentColor;
+  outline-offset: 1px;
+  border-bottom: 1px solid currentColor;
+}
+
+.content__blockquote {
+  width: 75%;
+  margin-block-end: 1.5em;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+  color: var(--text-color);
+  font-family: var(--main-font);
+
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 200%; /* 36px */
+}
+
+.content__list {
+  list-style-type: none;
+  padding-inline-start: 40px;
+}
+
+li {
+  position: relative;
+}
+
+li::before {
+  content: "";
+  position: absolute;
+  left: -20px;
+  top: 5px; /*подогнать в конце работы*/
+
+  inline-size: 15px;
+  block-size: 15px;
+  background-image: url(../images/marker-light.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+li:not(:last-of-type) {
+  margin-block-end: 10px;
+}
+
+.content__paragraph.content__text-block_type_first-lettered:first-letter {
+  background-color: var(--accent-color);
+  font-size: 30px;
+  font-weight: 700;
+  display: inline-block;
+  padding-left: 4px;
+  padding-right: 4px;
+  margin-right: 1px;
+}
+
+.content__picture {
+  /*width:100%;       НЕ РАБОТАЕТ, только через HTML*/
+}
+
+.content__figure {
+  position: relative;
+  margin-block-start: 7vi;
+  margin-block-end: 7vi;
+  width: 105vi;
+  right: 10vi;
+}
+
+.content__picture-caption {
+  text-align: center;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding-block:20px;
+  border-bottom: 1px solid currentColor;
+  font-family: var(--main-font);
+
+}
