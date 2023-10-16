@@ -21,6 +21,10 @@ figure {
   margin: 0;
 }
 
+button:disabled {
+  pointer-events: none;
+}
+
 :root {
   --bg-color: #f3efec;
   --text-color: #312a4e;
@@ -30,8 +34,17 @@ figure {
 }
 
 .page {
-  background-color: var(--bg-color);
-  color: var(--text-color);
+  min-inline-size: 360px;
+  margin: 0;
+  font-family: var(--main-font, Raleway);
+  background-color: var(--bg-color, #f3efec);
+  color: var(--text-color, #f3efec);
+}
+
+.theme_dark {
+  --bg-color: #171717;
+  --text-color: #b3b3b3;
+  --accent-color: transparent;
 }
 
 .heading {
@@ -71,21 +84,20 @@ figure {
   margin-block-end: 1.5em;
 }
 
-a {
+.content__text-block a {
   color: var(--text-color);
   text-decoration: none;
   border-bottom: 1px solid currentColor;
   cursor: pointer;
 }
 
-a:hover {
+.content__text-block a:hover {
   border-color: color-mix(in srgb, currentColor 50%, transparent);
 }
 
-a:focus {
+.content__text-block a:focus-visible {
   outline: 1px solid currentColor;
   outline-offset: 1px;
-  border-bottom: 1px solid currentColor;
 }
 
 .content__blockquote {
@@ -107,11 +119,11 @@ a:focus {
   padding-inline-start: 40px;
 }
 
-li {
+.content__list li {
   position: relative;
 }
 
-li::before {
+.content__list li::before {
   content: "";
   position: absolute;
   left: -20px;
@@ -124,11 +136,16 @@ li::before {
   background-repeat: no-repeat;
 }
 
-li:not(:last-of-type) {
+.theme_dark li::before {
+  background-image: url(../images/marker-dark.svg);
+}
+
+.content__list li:not(:last-of-type) {
   margin-block-end: 10px;
 }
 
-.content__paragraph.content__text-block_type_first-lettered:first-letter {
+.content__text-block_type_first-lettered
+  .content__paragraph:first-of-type::first-letter {
   background-color: var(--accent-color);
   font-size: 30px;
   font-weight: 700;
@@ -138,16 +155,22 @@ li:not(:last-of-type) {
   margin-right: 1px;
 }
 
-.content__picture {
-  /*width:100%;       НЕ РАБОТАЕТ, только через HTML*/
+.theme_dark
+  .content__text-block_type_first-lettered
+  .content__paragraph:first-of-type::first-letter {
+  border: 1px solid currentColor;
 }
 
 .content__figure {
   position: relative;
   margin-block-start: 7vi;
   margin-block-end: 7vi;
-  width: 105vi;
-  right: 10vi;
+  inline-size: calc(100% + 10vi);
+  inset-inline-end: 5vi;
+}
+
+.content__picture {
+  inline-size: 100%;
 }
 
 .content__picture-caption {
@@ -156,8 +179,142 @@ li:not(:last-of-type) {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  padding-block:20px;
+  padding-block: 20px;
   border-bottom: 1px solid currentColor;
   font-family: var(--main-font);
+}
 
+.content__card {
+  border: 1px solid currentColor;
+  margin-block-start: 7vi;
+  width: 100%;
+  aspect-ratio: 4/3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.content__card-title {
+  color: var(--text-color);
+  font-family: var(--accent-font);
+  font-size: 60px;
+}
+
+.colored-text {
+  position: relative;
+  display: inline-block;
+}
+
+.colored-text::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inline-size: calc(100% + 8px);
+  block-size: 0.5ch;
+  background-color: var(--accent-color);
+  inset-block-end: 0.3ch;
+  inset-inline-start: -4px;
+}
+
+/*.colored-text {
+  text-decoration: underline;
+  text-decoration-color: var(--accent-color);
+  text-decoration-skip-ink: none;
+  text-underline-offset: -15px;
+  text-decoration-thickness: 20px;  ВАРИАНТ РЕАЛИЗАЦИИ ЧЕРЕЗ ПОДЧЕРКИВАНИЕ
+}*/
+
+.theme_dark .colored-text::after {
+  background-image: url(../images/pattern.svg);
+}
+
+.content__card-subtitle {
+  color: var(--text-color);
+  text-align: center;
+  font-family: var(--main-font);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.header__menu {
+  display: flex;
+  justify-content: space-between;
+  border-block-start: 1px solid currentColor;
+  border-block-end: 1px solid currentColor;
+  padding-block-start: 20px;
+  padding-block-end: 20px;
+}
+
+.header__theme-toggler {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+
+.header__theme-button {
+  position: relative;
+  border: none;
+  padding: 0;
+  font-family: var(--main-font);
+  color: currentColor;
+  font-size: 18px;
+  background-color: transparent;
+  line-height: 104%; /* 18.72px */
+}
+
+.header__theme-button:hover {
+  cursor: pointer;
+  border-bottom: 1px solid currentColor;
+}
+
+.header__theme-button:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 1px;
+}
+
+.header__theme-button_type_dark {
+} /*ЗАЧЕМ? */
+
+.header__theme-button_type_light {
+} /*ЗАЧЕМ? */
+
+.header__theme-button_is-active {
+  font-weight: 700;
+}
+
+.header__theme-button_is-active::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inline-size: calc(100% + 8px);
+  block-size: 0.5ch;
+  background-color: var(--accent-color);
+  inset-block-end: 0.3ch;
+  inset-inline-start: -4px;
+}
+
+.theme_dark .header__theme-button_is-active::after {
+  background-image: url(../images/pattern.svg);
+}
+
+.footer {
+  margin-block-start: 10vi;
+  border-block-start: 1px solid currentColor;
+  text-align: center;
+}
+
+.footer__copyright {
+  padding-block-start: 2.5vi;
+  padding-block-end: 2.5vi;
+  color: var(--text-color);
+  font-family: var(--main-font);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
